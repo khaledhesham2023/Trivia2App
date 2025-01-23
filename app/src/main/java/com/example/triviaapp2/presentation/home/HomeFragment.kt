@@ -18,8 +18,5 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
         get() = R.layout.fragment_home
 
     override fun initializeComponents() {
-        loading.show()
     }
-    private val context: Context by lazy { this@HomeFragment.requireContext() }
-    private val loading: LoadingDialog by lazy { LoadingDialog(context) }
 }

@@ -59,6 +59,7 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.glide)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.converter.gson)
 }
 kapt {
     correctErrorTypes = true

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="dimen_000dp">0dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_200dp">200dp</dimen>
 </resources>

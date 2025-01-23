@@ -1,4 +1,4 @@
-package com.example.triviaapp2.presentation.utils
+package com.example.triviaapp2.utils
 
 object Urls {
     const val BASE_URL = "https://opentdb.com/"

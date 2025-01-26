@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="trivia_2">Trivia 2</string>
     <string name="start">Start</string>
+    <string name="enter_number_of_questions">Enter number of questions</string>
+    <string name="no_of_questions_error">Number of Questions must be between 1 and 50</string>
 </resources>

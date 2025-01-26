@@ -7,4 +7,7 @@
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="dimen_25dp">25dp</dimen>
     <dimen name="dimen_20dp">20sp</dimen>
+    <dimen name="dimen_50dp">50dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_008dp">8dp</dimen>
 </resources>

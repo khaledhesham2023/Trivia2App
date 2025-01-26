@@ -25,7 +25,7 @@ class SplashFragment : ParentFragment<FragmentSplashBinding>() {
 
     override fun initializeComponents() {
         Handler(Looper.getMainLooper()).postDelayed({
-            mNavigator.setNavigationEvent(MainNavigatorEvent.SplashToMain)
+            mNavigator.setNavigationEvent(MainNavigatorEvent.SplashToStart)
         },3000L)
     }
 

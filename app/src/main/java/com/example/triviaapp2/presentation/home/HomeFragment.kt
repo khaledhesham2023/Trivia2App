@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import com.example.triviaapp2.R
 import com.example.triviaapp2.databinding.FragmentHomeBinding
 import com.example.triviaapp2.presentation.parent.ParentFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : ParentFragment<FragmentHomeBinding>() {
     override val layout: Int
         get() = R.layout.fragment_home

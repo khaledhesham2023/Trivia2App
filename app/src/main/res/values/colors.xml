@@ -5,4 +5,7 @@
     <color name="deep_pink">#FF69B4</color>
     <color name="bright_blue">#1E90FF</color>
     <color name="deep_blue">#191970</color>
+    <color name="brown">#8B5A2B</color>
+    <color name="purple">#800080</color>
+    <color name="gold">#FFD700</color>
 </resources>

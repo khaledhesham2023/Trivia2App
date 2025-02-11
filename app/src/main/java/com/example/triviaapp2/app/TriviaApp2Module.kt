@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.triviaapp2.data.network.ServicesApi
 import com.example.triviaapp2.data.repository.QuestionsRepoImpl
 import com.example.triviaapp2.domain.repository.QuestionsRepo
+import com.example.triviaapp2.domain.usecases.GetQuestionsUseCases
 import com.example.triviaapp2.utils.Urls
 import dagger.Module
 import dagger.Provides
@@ -52,4 +53,8 @@ class TriviaApp2Module : Application() {
     @Provides
     @Singleton
     fun providesQuestionsRepo(api: ServicesApi): QuestionsRepo = QuestionsRepoImpl(api)
+
+    @Provides
+    @Singleton
+    fun provideGetQuestionsUseCases(repo: QuestionsRepo): GetQuestionsUseCases = GetQuestionsUseCases(repo)
 }

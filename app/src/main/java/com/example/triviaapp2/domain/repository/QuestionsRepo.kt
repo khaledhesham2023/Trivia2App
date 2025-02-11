@@ -6,5 +6,5 @@ import com.example.triviaapp2.utils.NetworkResponse
 import kotlinx.coroutines.flow.Flow
 
 interface QuestionsRepo {
-    suspend fun getQuestions(amount: Int): Flow<NetworkResponse<List<QuestionItem>>>
+    suspend fun getQuestions(numberOfQuestions: Int): Flow<NetworkResponse<GetQuestionsResponse>>
 }

@@ -8,4 +8,19 @@
     <color name="brown">#8B5A2B</color>
     <color name="purple">#800080</color>
     <color name="gold">#FFD700</color>
+    <color name="dodger_blue">#1E90FF</color>
+    <color name="arcade_green">#00FF00</color>
+    <color name="red">#FF0000</color>
+    <color name="dark_turquoise">#00CED1</color>
+    <color name="dark_blue">#00008B</color>
+    <color name="bronze">#CD7F32</color>
+    <color name="dark_orange">#FF8C00</color>
+    <color name="teal">#008080</color>
+    <color name="sepia">#704214</color>
+    <color name="navy_blue">#000080</color>
+    <color name="magenta">#FF00FF</color>
+    <color name="forest_green">#228B22</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="light_steel_blue">#B0C4DE</color>
+    <color name="orange_red">#FF4500</color>
 </resources>

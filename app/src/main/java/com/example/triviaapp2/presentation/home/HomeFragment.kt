@@ -31,7 +31,7 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
     private fun observeAllErrors() {
         lifecycleScope.launchWhenCreated {
             homeViewModel.error.collect { error ->
-                when(error)
+
             }
         }
     }

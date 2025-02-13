@@ -8,5 +8,5 @@ import retrofit2.http.Query
 
 interface ServicesApi {
     @GET(value = Urls.GET_NO_OF_QUESTIONS)
-    suspend fun getQuestions(@Query("amount") amount: Int): NetworkResponse<GetQuestionsResponse>
+    suspend fun getQuestions(@Query("amount") amount: Int): GetQuestionsResponse
 }

@@ -14,6 +14,8 @@ abstract class ParentFragment<VB : ViewDataBinding> : Fragment() {
     private val loading: LoadingDialog by lazy { LoadingDialog(requireContext()) }
     abstract val layout: Int
 
+    protected lateinit var loadingDialog: LoadingDialog
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,6 +27,7 @@ abstract class ParentFragment<VB : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadingDialog = LoadingDialog(requireContext())
         initializeComponents()
     }
 

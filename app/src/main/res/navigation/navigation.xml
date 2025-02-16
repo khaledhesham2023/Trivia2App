@@ -31,6 +31,11 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
+        tools:layout="@layout/fragment_home"
         android:name="com.example.triviaapp2.presentation.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <argument
+            android:name="noOfQuestions"
+            app:argType="integer" />
+    </fragment>
 </navigation>

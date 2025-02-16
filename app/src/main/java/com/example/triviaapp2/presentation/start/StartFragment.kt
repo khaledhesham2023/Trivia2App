@@ -36,7 +36,7 @@ class StartFragment : ParentFragment<FragmentStartBinding>() {
     private fun setupClicks() {
         binding.startBtn.setOnClickListener {
             if (isNumberOk()) {
-                mNavigator.setNavigationEvent(MainNavigatorEvent.StartToHome)
+                mNavigator.setNavigationEvent(MainNavigatorEvent.StartToHome(binding.appCompatEditText.text.toString().trim().toInt()))
             } else {
                 binding.appCompatEditText.error = getString(R.string.no_of_questions_error)
             }

@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.converter.gson)
+    implementation(libs.lottie)
 }
 kapt {
     correctErrorTypes = true

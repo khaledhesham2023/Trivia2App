@@ -4,22 +4,22 @@ import androidx.navigation.NavController
 import com.example.triviaapp2.presentation.splash.SplashFragmentDirections
 import com.example.triviaapp2.presentation.start.StartFragmentDirections
 
-class MainNavigatorController(val navController: NavController) {
+class MainNavigatorController(private val navController: NavController) {
 
     fun setNavigationEvent(event: MainNavigatorEvent){
         when(event){
-            MainNavigatorEvent.SplashToStart -> {
+            is MainNavigatorEvent.SplashToStart -> {
                 navController.navigate(SplashFragmentDirections.actionSplashFragmentToStartFragment())
             }
 
-            MainNavigatorEvent.StartToHome -> {
-                navController.navigate(StartFragmentDirections.actionStartFragmentToHomeFragment())
+            is MainNavigatorEvent.StartToHome -> {
+                navController.navigate(StartFragmentDirections.actionStartFragmentToHomeFragment(event.noOfQuestions))
             }
         }
     }
 }
 
-enum class MainNavigatorEvent {
-    SplashToStart,
-    StartToHome,
+sealed class MainNavigatorEvent {
+    data object SplashToStart: MainNavigatorEvent()
+    data class StartToHome(val noOfQuestions: Int): MainNavigatorEvent()
 }

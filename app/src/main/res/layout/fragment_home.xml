@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,8 +10,119 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/background"
+        android:elevation="@dimen/dimen_005dp"
         tools:context=".presentation.home.HomeFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/background"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        </androidx.appcompat.widget.AppCompatImageView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/questionAndDifficultyGroup"
+            android:layout_width="@dimen/dimen_000dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_016dp"
+            android:background="@drawable/bg_sheet"
+            android:padding="@dimen/dimen_020dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/questionNumberTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_016dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/rampart_one1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Question 1/10" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/difficultyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_016dp"
+                android:text="@string/difficulty"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/rampart_one1"
+                app:layout_constraintEnd_toStartOf="@id/difficulty"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/difficulty"
+                android:layout_width="@dimen/dimen_030dp"
+                android:layout_height="@dimen/dimen_030dp"
+                android:layout_margin="@dimen/dimen_016dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_difficult" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/questionTv"
+                android:layout_width="@dimen/dimen_000dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_016dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:fontFamily="@font/rampart_one1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/questionNumberTv"
+                tools:text="In &quot;Sonic the Hedgehog&quot; comic, who was the creator of Roboticizer?" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/answersGroup"
+            android:layout_width="@dimen/dimen_000dp"
+            android:layout_height="@dimen/dimen_000dp"
+            android:layout_margin="@dimen/dimen_016dp"
+            android:padding="@dimen/dimen_020dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/questionAndDifficultyGroup">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="@dimen/dimen_000dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/answersList"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="4"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/recycler_item_answer"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/answerBtn"
+                android:layout_width="@dimen/dimen_000dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_016dp"
+                android:fontFamily="@font/rampart_one1"
+                android:text="@string/continue_text"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/answersList" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

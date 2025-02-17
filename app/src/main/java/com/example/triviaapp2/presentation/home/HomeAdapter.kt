@@ -2,6 +2,7 @@ package com.example.triviaapp2.presentation.home
 
 import android.content.Context
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -58,6 +59,7 @@ class HomeAdapter(val context: Context, private val oldData: ArrayList<AnswerIte
     private fun selectItem(item: AnswerItem, position: Int) {
         isDisabled = false
         selectedItem = item
+        Log.d("Khaled2", selectedItem?.isCorrect.toString())
         item.isSelected = true
         selectedItemIndex = position
         selectedItemIndex?.let { onRecycleNotified(it) }

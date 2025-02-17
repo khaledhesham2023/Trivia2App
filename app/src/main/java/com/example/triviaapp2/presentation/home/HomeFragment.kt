@@ -118,14 +118,14 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
         lifecycleScope.launch {
             homeViewModel.questions.collect { questionsList ->
                 listOfQuestions = questionsList.toCollection(ArrayList())
-                questionsList[0].category?.let { category ->
+                questionsList[currentQuestionIndex].category?.let { category ->
                     MainNavigatorEvent.HomeToSheet(
                         category
                     )
                 }?.let { event -> mNavigator.setNavigationEvent(event) }
                 configureQuestion(
                     requireContext(),
-                    questionsList[0],
+                    questionsList[currentQuestionIndex],
                     binding.questionNumberTv,
                     binding.difficulty,
                     binding.questionTv,
@@ -134,16 +134,16 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
                     binding.background
                 )
                 val answers = arrayListOf<String>()
-                questionsList[0].incorrectAnswers?.let { answers.addAll(it) }
+                questionsList[currentQuestionIndex].incorrectAnswers?.let { answers.addAll(it) }
                 answers.shuffle()
                 val answersList =
                     answers.map { answer ->
                         AnswerItem(
-                            answer, false, questionsList[0].category,
-                            if (questionsList[0].type.toString() == "boolean") {
-                                answer.lowercase() == questionsList[0].correctAnswer
+                            answer, false, questionsList[currentQuestionIndex].category,
+                            if (questionsList[currentQuestionIndex].type.toString() == "boolean") {
+                                answer.lowercase() == questionsList[currentQuestionIndex].correctAnswer
                             } else {
-                                answer == questionsList[0].correctAnswer
+                                answer == questionsList[currentQuestionIndex].correctAnswer
                             }
                         )
                     }
@@ -161,40 +161,48 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
                 if (isWinning) {
                     isSolved = false
                     isWinning = false
-                    configureQuestion(
-                        requireContext(),
-                        listOfQuestions[1],
-                        binding.questionNumberTv,
-                        binding.difficulty,
-                        binding.questionTv,
-                        1,
-                        noOfQuestions,
-                        binding.background
-                    )
-                    disableList(false)
-                    homeAdapter.resetAll()
-                    val answers = arrayListOf<String>()
-                    listOfQuestions[1].incorrectAnswers?.let { answers.addAll(it) }
-                    answers.shuffle()
-                    val answersList =
-                        answers.map { answer ->
-                            AnswerItem(
-                                answer, false, listOfQuestions[1].category,
-                                if (listOfQuestions[1].type.toString() == "boolean") {
-                                    answer.lowercase() == listOfQuestions[1].correctAnswer
-                                } else {
-                                    answer == listOfQuestions[1].correctAnswer
-                                }
-                            )
-                        }
-                            .toCollection(ArrayList())
-                    Log.d("Khaled", listOfQuestions.toString())
-                    homeAdapter.updateAnswers(answersList)
-                    listOfQuestions[1].category?.let { categoryItem ->
-                        MainNavigatorEvent.HomeToSheet(
-                            categoryItem
+                    Log.d("Khaled2",listOfQuestions[currentQuestionIndex].correctAnswer.toString())
+                    if (currentQuestionIndex == noOfQuestions - 1) {
+                        Toast.makeText(requireContext(), "End of questions", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        currentQuestionIndex++
+                        configureQuestion(
+                            requireContext(),
+                            listOfQuestions[currentQuestionIndex],
+                            binding.questionNumberTv,
+                            binding.difficulty,
+                            binding.questionTv,
+                            currentQuestionIndex,
+                            noOfQuestions,
+                            binding.background
                         )
-                    }?.let { event -> mNavigator.setNavigationEvent(event) }
+                        disableList(false)
+                        homeAdapter.resetAll()
+                        val answers = arrayListOf<String>()
+                        listOfQuestions[currentQuestionIndex].incorrectAnswers?.let { answers.addAll(it) }
+                        answers.shuffle()
+                        val answersList =
+                            answers.map { answer ->
+                                AnswerItem(
+                                    answer, false, listOfQuestions[currentQuestionIndex].category,
+                                    if (listOfQuestions[currentQuestionIndex].type.toString() == "boolean") {
+                                        answer.lowercase() == listOfQuestions[1].correctAnswer
+                                    } else {
+                                        answer == listOfQuestions[1].correctAnswer
+                                    }
+                                )
+                            }
+                                .toCollection(ArrayList())
+                        Log.d("Khaled", listOfQuestions.toString())
+                        homeAdapter.updateAnswers(ArrayList())
+                        homeAdapter.updateAnswers(answersList)
+                        listOfQuestions[currentQuestionIndex].category?.let { categoryItem ->
+                            MainNavigatorEvent.HomeToSheet(
+                                categoryItem
+                            )
+                        }?.let { event -> mNavigator.setNavigationEvent(event) }
+                    }
                 } else {
                     mNavigator.setNavigationEvent(MainNavigatorEvent.NavigateUp)
                 }

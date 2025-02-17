@@ -14,4 +14,6 @@
     <string name="select_answer">Select Answer</string>
     <string name="prepare_for_next_question_in">Prepare for next Question in</string>
     <string name="retry">Retry</string>
+    <string name="congratulations_you_won_the_game">Congratulations, You won the game !!</string>
+    <string name="return_home">Return home</string>
 </resources>

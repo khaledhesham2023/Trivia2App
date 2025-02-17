@@ -50,4 +50,15 @@
             android:name="category"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/winningFragment"
+        tools:layout="@layout/fragment_winning"
+        android:name="com.example.triviaapp2.presentation.winning.WinningFragment"
+        android:label="WinningFragment" >
+        <action
+            android:id="@+id/action_winningFragment_to_startFragment"
+            app:destination="@id/startFragment"
+            app:popUpTo="@id/winningFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

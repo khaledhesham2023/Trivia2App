@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import com.example.triviaapp2.presentation.home.HomeFragmentDirections
 import com.example.triviaapp2.presentation.splash.SplashFragmentDirections
 import com.example.triviaapp2.presentation.start.StartFragmentDirections
+import com.example.triviaapp2.presentation.winning.WinningFragmentDirections
 
 class MainNavigatorController(private val navController: NavController) {
 
@@ -32,6 +33,10 @@ class MainNavigatorController(private val navController: NavController) {
             is MainNavigatorEvent.NavigateUp -> {
                 navController.navigateUp()
             }
+
+            is MainNavigatorEvent.WinningToStart -> {
+                navController.navigate(WinningFragmentDirections.actionWinningFragmentToStartFragment())
+            }
         }
     }
 }
@@ -41,4 +46,5 @@ sealed class MainNavigatorEvent {
     data class StartToHome(val noOfQuestions: Int) : MainNavigatorEvent()
     data class HomeToSheet(val category: String) : MainNavigatorEvent()
     data object NavigateUp : MainNavigatorEvent()
+    data object WinningToStart: MainNavigatorEvent()
 }

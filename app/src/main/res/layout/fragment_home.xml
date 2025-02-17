@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="@dimen/dimen_005dp"
+
         tools:context=".presentation.home.HomeFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -38,38 +39,45 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/questionNumberTv"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dimen_000dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_016dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_14sp"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_12sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/rampart_one1"
+                app:layout_constraintEnd_toStartOf="@+id/difficultyLabel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Question 1/10" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/difficultyLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dimen_000dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_016dp"
                 android:text="@string/difficulty"
+                android:gravity="end"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_14sp"
+                android:textSize="@dimen/text_size_12sp"
                 android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/questionNumberTv"
                 app:fontFamily="@font/rampart_one1"
                 app:layout_constraintEnd_toStartOf="@id/difficulty"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/difficulty"
-                android:layout_width="@dimen/dimen_030dp"
-                android:layout_height="@dimen/dimen_030dp"
-                android:layout_margin="@dimen/dimen_016dp"
+                android:layout_width="@dimen/dimen_000dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rampart_one1"
+                tools:text="@string/easy"
+                android:textSize="@dimen/text_size_12sp"
+                android:layout_marginStart="@dimen/dimen_008dp"
+                android:gravity="start"
+                app:layout_constraintStart_toEndOf="@id/difficultyLabel"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_difficult" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/questionTv"
@@ -107,6 +115,15 @@
                 tools:itemCount="4"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/recycler_item_answer"/>
+            <View
+                android:layout_width="@dimen/dimen_000dp"
+                android:layout_height="@dimen/dimen_000dp"
+                android:id="@+id/view"
+                app:layout_constraintTop_toTopOf="@id/answersList"
+                app:layout_constraintBottom_toBottomOf="@id/answersList"
+                app:layout_constraintStart_toStartOf="@id/answersList"
+                app:layout_constraintEnd_toEndOf="@id/answersList"
+                android:background="#00FFFFFF"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/answerBtn"
@@ -114,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_016dp"
                 android:fontFamily="@font/rampart_one1"
-                android:text="@string/continue_text"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

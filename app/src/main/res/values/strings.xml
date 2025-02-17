@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">TriviaApp2</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="trivia_2">Trivia 2</string>
     <string name="start">Start</string>
     <string name="enter_number_of_questions">Enter number of questions</string>
     <string name="no_of_questions_error">Number of Questions must be between 1 and 50</string>
     <string name="now_loading">Now Loading</string>
-    <string name="difficulty">Difficulty</string>
+    <string name="difficulty">Difficulty:</string>
     <string name="continue_text">Continue</string>
     <string name="question_no">Question No. %s/%s</string>
-    <string name="easy">easy</string>
-    <string name="medium">medium</string>
-    <string name="hard">hard</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="select_answer">Select Answer</string>
+    <string name="prepare_for_next_question_in">Prepare for next Question in</string>
+    <string name="retry">Retry</string>
 </resources>

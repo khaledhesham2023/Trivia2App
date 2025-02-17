@@ -37,5 +37,17 @@
         <argument
             android:name="noOfQuestions"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_homeFragment_to_questionInfoSheet"
+            app:destination="@id/questionInfoSheet" />
     </fragment>
+    <dialog
+        android:id="@+id/questionInfoSheet"
+        tools:layout="@layout/dialog_next_question"
+        android:name="com.example.triviaapp2.presentation.questionInfo.QuestionInfoSheet"
+        android:label="QuestionInfoSheet" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </dialog>
 </navigation>

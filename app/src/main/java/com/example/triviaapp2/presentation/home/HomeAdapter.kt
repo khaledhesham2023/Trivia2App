@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -13,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.triviaapp2.R
 import com.example.triviaapp2.data.model.AnswerItem
 import com.example.triviaapp2.databinding.RecyclerItemAnswerBinding
+import com.example.triviaapp2.utils.enums.Categories
 import java.util.ArrayList
 
-class HomeAdapter(val context: Context, private val oldData: ArrayList<AnswerItem>, val onRecycleNotified: (Int) -> Unit) : Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(val context: Context, private val oldData: ArrayList<AnswerItem>, val onRecycleNotified: (Int) -> Unit, val onAnswerChecked: (AnswerItem, TextView) -> Unit) : Adapter<HomeAdapter.HomeViewHolder>() {
 
     private var selectedItemIndex: Int? = null
     private var selectedItem: AnswerItem? = null
     var isDisabled: Boolean = true
+    private lateinit var textView: TextView
 
     inner class HomeViewHolder(val binding: RecyclerItemAnswerBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -28,8 +31,15 @@ class HomeAdapter(val context: Context, private val oldData: ArrayList<AnswerIte
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+        textView = holder.binding.answer
         holder.binding.answer.text = Html.fromHtml(oldData[position].answer)
-        holder.binding.selector.isVisible = oldData[position].isSelected == true
+        holder.binding.selector.apply {
+            isVisible = oldData[position].isSelected == true
+            setAnimation(when(oldData[0].category){
+                Categories.CELEBRITIES.value, Categories.ENTERTAINMENT_COMICS.value, Categories.ENTERTAINMENT_FILMS.value, Categories.ENTERTAINMENT_MUSICALS_THEATRES.value, Categories.ENTERTAINMENT_VIDEO_GAMES.value, Categories.GENERAL_KNOWLEDGE.value, Categories.SCIENCE_COMPUTERS.value, Categories.SCIENCE_GADGETS.value, Categories.VEHICLES.value -> R.raw.selector2
+                else -> R.raw.selector
+            })
+        }
         holder.binding.answer.background = if (oldData[position].isSelected) ContextCompat.getDrawable(context,R.drawable.bg_sheet_selected) else ContextCompat.getDrawable(context,R.drawable.bg_sheet)
         holder.binding.root.setOnClickListener {
             if (oldData[position].isSelected){
@@ -61,6 +71,10 @@ class HomeAdapter(val context: Context, private val oldData: ArrayList<AnswerIte
         selectedItemIndex = null
     }
 
+    fun resetAll(){
+        selectedItem?.let { unSelectItem(it) }
+    }
+
     override fun getItemCount(): Int = oldData.size
 
     fun updateAnswers(newData: ArrayList<AnswerItem>) {
@@ -70,6 +84,10 @@ class HomeAdapter(val context: Context, private val oldData: ArrayList<AnswerIte
         oldData.addAll(newData)
         diffResult.dispatchUpdatesTo(this)
 
+    }
+
+    fun checkAnswer() {
+        selectedItem?.let { onAnswerChecked(it, textView) }
     }
 }
 class AnswersUtils(private val oldData: ArrayList<AnswerItem>, private val newData: ArrayList<AnswerItem>) : DiffUtil.Callback(){

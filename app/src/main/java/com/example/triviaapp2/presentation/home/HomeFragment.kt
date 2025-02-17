@@ -10,13 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.triviaapp2.R
 import com.example.triviaapp2.data.model.AnswerItem
+import com.example.triviaapp2.data.model.QuestionItem
 import com.example.triviaapp2.databinding.FragmentHomeBinding
 import com.example.triviaapp2.presentation.parent.ParentFragment
+import com.example.triviaapp2.utils.MainNavigatorController
+import com.example.triviaapp2.utils.MainNavigatorEvent
 import com.example.triviaapp2.utils.NetworkResponse
 import com.example.triviaapp2.utils.configureQuestion
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,13 +36,35 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
     private val homeViewModel: HomeViewModel by viewModels()
     private var currentQuestionIndex = 0
     private var noOfQuestions = 0
-    private val homeAdapter: HomeAdapter by lazy { HomeAdapter(requireContext(), ArrayList()){
-        binding.answersList.post {
-            homeAdapter.notifyItemChanged(it)
-            configureAnswerButton()
-        }
-    } }
+    private var isWinning = false
+    private var isSolved = false
+    private lateinit var listOfQuestions: ArrayList<QuestionItem>
+    private val homeAdapter: HomeAdapter by lazy {
+        HomeAdapter(requireContext(), ArrayList(), onRecycleNotified = {
+            binding.answersList.post {
+                homeAdapter.notifyItemChanged(it)
+                configureAnswerButton()
+            }
+        }, onAnswerChecked = { answerItem, textView ->
+            Log.i("Khaled", answerItem.toString())
+            if (answerItem.isCorrect == true) {
+                textView.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_sheet_correct)
+                binding.answerBtn.text = getString(R.string.continue_text)
+                isWinning = true
+                isSolved = true
+            } else {
+                textView.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_sheet_incorrect)
+                binding.answerBtn.text = getString(R.string.retry)
+                isWinning = false
+                isSolved = true
+            }
+            disableList(true)
+        })
+    }
     private val navArgs: HomeFragmentArgs by navArgs()
+    private val mNavigator by lazy { MainNavigatorController(findNavController()) }
 
     override fun initializeComponents() {
         noOfQuestions = navArgs.noOfQuestions
@@ -46,14 +73,15 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
         observeGetQuestions()
         observeAllErrors()
         binding.answersList.adapter = homeAdapter
-        homeViewModel.setEvent(QuestionsEvent.GetQuestions(5))
+        homeViewModel.setEvent(QuestionsEvent.GetQuestions(noOfQuestions))
     }
 
     private fun configureAnswerButton() {
-        if (homeAdapter.isDisabled){
+        binding.answerBtn.text = getString(R.string.select_answer)
+        if (homeAdapter.isDisabled) {
             binding.answerBtn.apply {
                 background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_btn_disabled)
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.dodger_blue))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.dodger_blue))
                 isClickable = false
             }
         } else {
@@ -89,10 +117,12 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
     private fun observeGetQuestions() {
         lifecycleScope.launch {
             homeViewModel.questions.collect { questionsList ->
-                Log.d(
-                    "Khaled",
-                    "${questionsList[0].category} ${questionsList[0].correctAnswer} ${questionsList[0].difficulty}"
-                )
+                listOfQuestions = questionsList.toCollection(ArrayList())
+                questionsList[0].category?.let { category ->
+                    MainNavigatorEvent.HomeToSheet(
+                        category
+                    )
+                }?.let { event -> mNavigator.setNavigationEvent(event) }
                 configureQuestion(
                     requireContext(),
                     questionsList[0],
@@ -107,18 +137,85 @@ class HomeFragment : ParentFragment<FragmentHomeBinding>() {
                 questionsList[0].incorrectAnswers?.let { answers.addAll(it) }
                 answers.shuffle()
                 val answersList =
-                    answers.map { answer -> AnswerItem(answer, false) }.toCollection(ArrayList())
+                    answers.map { answer ->
+                        AnswerItem(
+                            answer, false, questionsList[0].category,
+                            if (questionsList[0].type.toString() == "boolean") {
+                                answer.lowercase() == questionsList[0].correctAnswer
+                            } else {
+                                answer == questionsList[0].correctAnswer
+                            }
+                        )
+                    }
+                        .toCollection(ArrayList())
+                Log.d("Khaled", answersList.toString())
                 homeAdapter.updateAnswers(answersList)
                 loadingDialog.dismiss()
-                Toast.makeText(requireContext(), questionsList.size.toString(), Toast.LENGTH_SHORT)
-                    .show()
             }
         }
     }
-    private fun setupClicks() {
-    binding.answerBtn.setOnClickListener {
 
+    private fun setupClicks() {
+        binding.answerBtn.setOnClickListener {
+            if (isSolved) {
+                if (isWinning) {
+                    isSolved = false
+                    isWinning = false
+                    configureQuestion(
+                        requireContext(),
+                        listOfQuestions[1],
+                        binding.questionNumberTv,
+                        binding.difficulty,
+                        binding.questionTv,
+                        1,
+                        noOfQuestions,
+                        binding.background
+                    )
+                    disableList(false)
+                    homeAdapter.resetAll()
+                    val answers = arrayListOf<String>()
+                    listOfQuestions[1].incorrectAnswers?.let { answers.addAll(it) }
+                    answers.shuffle()
+                    val answersList =
+                        answers.map { answer ->
+                            AnswerItem(
+                                answer, false, listOfQuestions[1].category,
+                                if (listOfQuestions[1].type.toString() == "boolean") {
+                                    answer.lowercase() == listOfQuestions[1].correctAnswer
+                                } else {
+                                    answer == listOfQuestions[1].correctAnswer
+                                }
+                            )
+                        }
+                            .toCollection(ArrayList())
+                    Log.d("Khaled", listOfQuestions.toString())
+                    homeAdapter.updateAnswers(answersList)
+                    listOfQuestions[1].category?.let { categoryItem ->
+                        MainNavigatorEvent.HomeToSheet(
+                            categoryItem
+                        )
+                    }?.let { event -> mNavigator.setNavigationEvent(event) }
+                } else {
+                    mNavigator.setNavigationEvent(MainNavigatorEvent.NavigateUp)
+                }
+            } else {
+                homeAdapter.checkAnswer()
+            }
+        }
     }
+
+    private fun disableList(b: Boolean) {
+        if (b) {
+            binding.view.apply {
+                isVisible = true
+                isClickable = true
+            }
+        } else {
+            binding.view.apply {
+                isVisible = false
+                isClickable = false
+            }
+        }
     }
 }
 

@@ -26,4 +26,5 @@
     <color name="orange_red">#FF4500</color>
     <color name="sheet_color">#FFD8B3</color>
     <color name="nature_green">#008000</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

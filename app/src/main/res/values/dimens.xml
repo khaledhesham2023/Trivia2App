@@ -12,4 +12,6 @@
     <dimen name="dimen_008dp">8dp</dimen>
     <dimen name="text_size_14sp">14sp</dimen>
     <dimen name="dimen_005dp">5dp</dimen>
+    <dimen name="text_size_12sp">12sp</dimen>
+    <dimen name="text_size_20sp">20sp</dimen>
 </resources>
